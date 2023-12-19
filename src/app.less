@@ -1,0 +1,24 @@
+@color: red;
+
+.lessBox {
+  .box {
+    color: @color;
+    background-color: lightblue;
+    transform: translateX(100);
+
+    &:before {
+      @arr: 'hello', 'world';
+      content: ` @{arr}.join(' ') .toUpperCase() `;
+    }
+  }
+  .smallImg {
+    width: 69px;
+    height: 69px;
+    background: url('@/assets/images/5kb_img.png') center/cover;
+  }
+  .bigImg {
+    width: 232px;
+    height: 311px;
+    background: url('@/assets/images/10kb_img.png') center/cover;
+  }
+}
