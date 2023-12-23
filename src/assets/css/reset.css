@@ -1,0 +1,99 @@
+/* Reset.css */
+
+/* Box sizing border-box for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ol,
+ul {
+  margin: 0;
+}
+
+/* Remove default padding */
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ol,
+ul {
+  padding: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default margin on html */
+html {
+  margin: 0;
+}
+
+/* Remove default monospace user interface font-family */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+    'Helvetica Neue', sans-serif;
+}
+
+/* Inherit font-family and font-size from html element */
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Remove quote marks from q and blockquote elements */
+q,
+blockquote {
+  quotes: none;
+}
+
+/* Remove margin on q and blockquote elements */
+q,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove border spacing for table elements */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove default border on img, video, and canvas */
+img,
+video,
+canvas {
+  border: 0;
+}
+
+/* Remove default vertical alignment on audio and video elements */
+audio,
+video {
+  vertical-align: baseline;
+}

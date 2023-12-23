@@ -23,6 +23,8 @@ module.exports = {
   rules: {
     // eslint (http://eslint.cn/docs/rules)
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'no-console': 0,
+    '@typescript-eslint/no-unused-vars': 1, // 禁止定义未使用的变量
     'class-methods-use-this': 'off',
     'no-param-reassign': 'off',
     'no-unused-expressions': 'off',
@@ -30,11 +32,20 @@ module.exports = {
     'no-restricted-syntax': 0,
     'consistent-return': 0,
     '@typescript-eslint/ban-types': 'off',
-    // "import/no-extraneous-dependencies": "off",
+    // 'import/no-extraneous-dependencies': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    // 'import/no-extraneous-dependencies': [
+    //   'error',
+    //   {
+    //     devDependencies: false,
+    //     optionalDependencies: false,
+    //     peerDependencies: false,
+    //     packageDir: __dirname
+    //   }
+    // ],
     '@typescript-eslint/no-non-null-assertion': 'off',
     'import/no-unresolved': 'off',
     'import/prefer-default-export': 'off', // 关闭默认使用 export default 方式导出
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     '@typescript-eslint/no-use-before-define': 0,
     'no-use-before-define': 0,
     '@typescript-eslint/no-var-requires': 0,
@@ -61,7 +72,6 @@ module.exports = {
     // "no-irregular-whitespace": "off", // 禁止不规则的空白
 
     // // typeScript (https://typescript-eslint.io/rules)
-    // "@typescript-eslint/no-unused-vars": "error", // 禁止定义未使用的变量
     // "@typescript-eslint/no-inferrable-types": "off", // 可以轻松推断的显式类型可能会增加不必要的冗长
     // "@typescript-eslint/no-namespace": "off", // 禁止使用自定义 TypeScript 模块和命名空间。
     // "@typescript-eslint/no-explicit-any": "off", // 禁止使用 any 类型

@@ -30,7 +30,14 @@ const devConfig: Configuration = merge(baseConfig, {
     static: {
       directory: path.join(__dirname, '../public') // 托管静态资源public文件夹
     },
-    headers: { 'Access-Control-Allow-Origin': '*' }
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: {
+      '/xboot': {
+        target: 'http://139.180.190.62:8888',
+        changeOrigin: true
+        // rewrite: (path) => path.replace(/^\/api/, "")
+      }
+    }
   }
 });
 

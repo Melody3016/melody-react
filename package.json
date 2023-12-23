@@ -20,7 +20,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "antd": "^5.12.4",
+    "axios": "^1.6.2",
     "dotenv": "^16.3.1",
+    "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0"
@@ -72,6 +76,7 @@
     "prettier": "^3.1.1",
     "purgecss-webpack-plugin": "^5.0.0",
     "react-refresh": "^0.14.0",
+    "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "speed-measure-webpack-plugin": "^1.5.0",
     "style-loader": "^3.3.3",
