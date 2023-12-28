@@ -42,22 +42,24 @@ export const loginReq = (params: ILoginParam) => {
    2 发送注册验证码
    3 发送重置密码验证码
  */
-export const sendSms = (params: ISmsParam, type: number) => {
+export const sendSms = (params: ISmsParam) => {
   let url = '/common/captcha/';
+  const { type, mobile } = params;
   if (type === 1) {
     // 登录验证码
-    url += `sendLoginSms/${params.mobile}`;
+    url += `sendLoginSms/${mobile}`;
   } else if (type === 2) {
     // 注册验证码
-    url += `sendRegistSms/${params.mobile}`;
+    url += `sendRegistSms/${mobile}`;
   } else if (type === 3) {
     // 重置密码验证码
-    url += `sendResetSms/${params.mobile}`;
+    url += `sendResetSms/${mobile}`;
   }
-  return getNoAuthRequest<IData<string>>(url, {
-    captchaId: params.captchaId,
-    code: params.code
-  });
+  // return getNoAuthRequest<IData<string>>(url, {
+  //   captchaId: params.captchaId,
+  //   code: params.code
+  // });
+  return getNoAuthRequest<IData<string>>(url);
 };
 
 // 通过手机重置密码

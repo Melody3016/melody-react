@@ -4,13 +4,13 @@ import useAxios from '@/hooks/useAxios';
 const useLogin = () => {
   // 账户密码登录
   const loginByAccount = async (formValues: ILoginParam, captchaId: string) => {
-    const { fetchData } = useAxios<string, ILoginParam>(params => loginReq(params as ILoginParam));
+    const { fetchData } = useAxios();
     // 登录
     const params = {
       ...formValues,
       captchaId
     };
-    const res = await fetchData(params);
+    const res = await fetchData(params => loginReq(params as ILoginParam), params);
     return res;
   };
 

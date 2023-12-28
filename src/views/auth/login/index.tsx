@@ -46,6 +46,7 @@ const Login: React.FC = () => {
         <div className={style.pane}>
           {/* 登录面板 */}
           <Tabs
+            destroyInactiveTabPane
             activeKey={tabsKey}
             size='large'
             items={tabsItems}

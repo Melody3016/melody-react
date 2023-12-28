@@ -1,5 +1,5 @@
 {
-  "name": "xboot-react",
+  "name": "melody-react",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -27,7 +27,8 @@
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0"
+    "react-router-dom": "^6.21.0",
+    "react-spring": "^9.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",

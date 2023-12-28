@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 // import util from '@/libs/util';
 // import Main from '@/views/Main';
 // import Login from '@/views/auth/login';
@@ -158,68 +159,81 @@ export const reset = {
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 // const RedirectComponent = () => <Navigate to="/home" replace />;
-// const LazyHome = React.lazy(() => import('@/views/home/Home'));
-// export const otherRouter: RouteObject = {
-//   path: '/',
-//   loader: ({ request }) => {
-//     if (new URL(request.url).pathname === '/') {
-//       return redirect('/home');
-//     }
-//     return null;
-//   },
-//   // redirect: '/home',
-//   element: <Main />,
-//   children: [
-//     {
-//       path: 'home',
-//       /* action: () => {
-//         util.title('首页 - react版本前后端分离快速开发平台');
-//       },
-//       loader: () => ({
-//         localize: true,
-//         i18n: 'home'
-//       }),
-//       lazy: () => import('@/views/home/Home') */
-//       element: <LazyHome />
-//     }
-//     /*  {
-//       path: 'ownspace',
-//       title: '个人中心',
-//       name: 'ownspace_index',
-//       component: () => import('@/views/own-space/own-space.vue')
-//     },
-//     {
-//       path: 'message',
-//       title: '消息中心',
-//       name: 'message_index',
-//       component: () => import('@/views/message/message.vue')
-//     },
-//     {
-//       path: 'add',
-//       title: '添加',
-//       name: 'add',
-//       component: () => import('@/views/xboot-vue-template/new-window/add.vue')
-//     },
-//     {
-//       path: 'edit',
-//       title: '编辑',
-//       name: 'edit',
-//       component: () => import('@/views/xboot-vue-template/new-window/edit.vue')
-//     },
-//     {
-//       path: 'leave',
-//       title: '请假申请',
-//       name: 'leave',
-//       component: () => import('@/views/activiti/business/leave.vue')
-//     },
-//     {
-//       path: 'historic-detail',
-//       title: '流程进度历史详情',
-//       name: 'historic_detail',
-//       component: () => import('@/views/activiti/historic-detail/historicDetail.vue')
-//     } */
-//   ]
-// };
+const LazyMain = React.lazy(() => import('@/views/Main'));
+const LazyHome = React.lazy(() => import('@/views/home/Home'));
+const LazyOwnSpace = React.lazy(() => import('@/views/own-space/own-space'));
+export const otherRouter = {
+  path: '/',
+  // loader: () => {
+  //   // if (new URL(request.url).pathname === '/') {
+  //   //   return redirect('/home');
+  //   // }
+  //   // return null;
+  //   return redirect('/home');
+  // },
+  // redirect: '/home',
+  element: <LazyMain />,
+  children: [
+    {
+      index: true, // <-- match on parent, i.e. "/"
+      meta: {
+        title: '首页 - react版本前后端分离快速开发平台'
+      },
+      element: <Navigate to='/home' replace /> // <-- redirect
+    },
+    {
+      path: 'home',
+      /* action: () => {
+        util.title('首页 - react版本前后端分离快速开发平台');
+      },
+      loader: () => ({
+        localize: true,
+        i18n: 'home'
+      }), */
+      meta: {
+        title: '首页 - react版本前后端分离快速开发平台'
+      },
+      element: <LazyHome />
+    },
+    {
+      path: 'ownspace',
+      meta: {
+        title: '个人中心 - react版本前后端分离快速开发平台'
+      },
+      element: <LazyOwnSpace />
+    }
+    /* {
+      path: 'message',
+      title: '消息中心',
+      name: 'message_index',
+      component: () => import('@/views/message/message.vue')
+    },
+    {
+      path: 'add',
+      title: '添加',
+      name: 'add',
+      component: () => import('@/views/xboot-vue-template/new-window/add.vue')
+    },
+    {
+      path: 'edit',
+      title: '编辑',
+      name: 'edit',
+      component: () => import('@/views/xboot-vue-template/new-window/edit.vue')
+    },
+    {
+      path: 'leave',
+      title: '请假申请',
+      name: 'leave',
+      component: () => import('@/views/activiti/business/leave.vue')
+    },
+    {
+      path: 'historic-detail',
+      title: '流程进度历史详情',
+      name: 'historic_detail',
+      component: () => import('@/views/activiti/historic-detail/historicDetail.vue')
+    } */
+  ]
+};
 
 export const appRouter = [];
 
@@ -233,7 +247,7 @@ export const routers = [
   // reset,
   //   relateRouter,
   //   authorizeRouter,
-  // otherRouter,
+  otherRouter,
   ...appRouter
   //   page500,
   //   page403

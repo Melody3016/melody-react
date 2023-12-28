@@ -28,13 +28,16 @@ const beforeEach: React.FC<MyComponentProps> = ({ children }) => {
 
   // 监听路由变化：route.pathname
   useEffect(() => {
-    const title = children?.props?.match?.route?.meta?.title;
+    console.log('beforeEach ---> children', children);
+    const title =
+      children?.props?.routeContext?.outlet?.props?.match?.route?.meta?.title ||
+      children?.props?.match?.route?.meta?.title;
     util.title(String(title));
     const isInWhiteList = util.oneOf(name, whiteList);
     if (!Cookies.get('userInfo') && !isInWhiteList) {
       // 判断是否已经登录且页面不在白名单
       navigate('/login');
-    } else if (Cookies.get('userInfo') && name === 'login') {
+    } else if (Cookies.get('userInfo') && name === '/login') {
       // 判断是否已经登录且前往的是登录页
       util.title();
       navigate('/home');

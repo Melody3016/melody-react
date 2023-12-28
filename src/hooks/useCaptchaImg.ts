@@ -6,12 +6,12 @@ const useCaptchaImg = () => {
   const [loadingCaptcha, setLoadingCaptcha] = useState(false);
   const [captchaImg, setCaptchaImg] = useState('');
   const [captchaId, setCaptchaId] = useState('');
-  const { fetchData } = useAxios<string>(initCaptcha);
+  const { fetchData } = useAxios();
 
   const getCaptchaImg = async () => {
     // 获取验证码
     setLoadingCaptcha(true);
-    const res = await fetchData();
+    const res = await fetchData<string>(initCaptcha);
     if (res) {
       setCaptchaId(res);
       setCaptchaImg(drawCodeImage + res);
@@ -22,10 +22,12 @@ const useCaptchaImg = () => {
   // 每60s刷新一次验证码
   useEffect(() => {
     getCaptchaImg();
+    console.log('开启自动刷新验证码');
     const refreshInterval = setInterval(() => {
       getCaptchaImg();
     }, 60000); // 每 60 秒刷新一次
     return () => {
+      console.log('清除自动刷新验证码');
       clearInterval(refreshInterval);
     };
   }, []);
