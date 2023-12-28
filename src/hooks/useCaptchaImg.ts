@@ -11,7 +11,7 @@ const useCaptchaImg = () => {
   const getCaptchaImg = async () => {
     // 获取验证码
     setLoadingCaptcha(true);
-    const res = await fetchData<string>(initCaptcha);
+    const res = await fetchData(initCaptcha);
     if (res) {
       setCaptchaId(res);
       setCaptchaImg(drawCodeImage + res);
