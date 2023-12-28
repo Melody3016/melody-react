@@ -32,6 +32,7 @@ interface ISmsParam {
   mobile: string;
   captchaId?: string;
   code?: string;
+  type?: number;
 }
 // 邮箱验证码
 interface IEmailParam {

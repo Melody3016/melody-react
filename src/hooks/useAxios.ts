@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { message as Message } from 'antd';
 import { setStore } from '@/libs/storage';
 
-const useAxios = <T, R = any>(fetchFunc: (p?: R) => Promise<IData<T>>) => {
+const useAxios = () => {
   // const [res, setRes] = useState<T>();
   const location = useLocation();
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const useAxios = <T, R = any>(fetchFunc: (p?: R) => Promise<IData<T>>) => {
   //   fetchData();
   // }, []);
 
-  const fetchData = async (params?: R) => {
+  const fetchData = async <T, R = any>(fetchFunc: (p?: R) => Promise<IData<T>>, params?: R) => {
     try {
       const { code, message, result } = await fetchFunc(params);
 

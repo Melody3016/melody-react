@@ -12,7 +12,7 @@ const UserLoginForm: React.FC = () => {
   // 获取验证码
   const { loadingCaptcha, captchaImg, captchaId, getCaptchaImg } = useCaptchaImg();
   // 登录
-  const { fetchData } = useAxios<string, ILoginParam>(params => loginReq(params as ILoginParam));
+  const { fetchData } = useAxios();
   const [form] = Form.useForm<ILoginParam>();
   const [loginLoading, setLoginLoading] = useState(false);
   const submitLogin = async () => {
@@ -25,7 +25,10 @@ const UserLoginForm: React.FC = () => {
         ...formValues,
         captchaId
       };
-      const accessToken = await fetchData(params);
+      const accessToken = await fetchData<string, ILoginParam>(
+        params => loginReq(params as ILoginParam),
+        params
+      );
       if (accessToken) {
         console.log('登录成功！', accessToken);
         // const { afterLogin } = useAfterLogin(instance);

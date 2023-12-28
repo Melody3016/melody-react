@@ -62,11 +62,11 @@ const countDownButton: React.FC<MyButtonProps> = ({
   }, [isCountDown]);
 
   const handleClick = () => {
+    // 执行props传递的单击方法
+    onClick && onClick();
     if (autoCountDown) {
       setIsCountDown(true);
     }
-    // 执行props传递的单击方法
-    onClick && onClick();
   };
 
   return (
