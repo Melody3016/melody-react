@@ -28,7 +28,6 @@ const beforeEach: React.FC<MyComponentProps> = ({ children }) => {
 
   // 监听路由变化：route.pathname
   useEffect(() => {
-    console.log('beforeEach ---> children', children);
     const title =
       children?.props?.routeContext?.outlet?.props?.match?.route?.meta?.title ||
       children?.props?.match?.route?.meta?.title;

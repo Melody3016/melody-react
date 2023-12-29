@@ -65,3 +65,10 @@ declare module '*.png' {
   const ref: string;
   export default ref;
 }
+
+// declare type IRouterRecord = {
+//   path: String;
+//   element: JSX.Element;
+//   meta?: Object;
+//   children?: IRouter;
+// };

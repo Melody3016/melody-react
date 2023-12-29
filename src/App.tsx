@@ -5,6 +5,8 @@ import { routers } from './router/router';
 import './app.scss';
 
 function App() {
+  console.log('app.tsx ==> routers', routers);
+
   const element = useRoutes(routers);
   return (
     <ConfigProvider

@@ -14,13 +14,13 @@ const useAfterLogin = () => {
     const res = await fetchData(userInfo);
     if (!res) return;
     // 避免超过大小限制
-    // delete res.result.permissions;
+    delete res.permissions;
     // 当前用户拥有的角色
     const roles: string[] = [];
     res.roles?.forEach(e => {
       roles.push(e.name);
     });
-    // delete res.result.roles;
+    delete res.roles;
     // 本地存储
     setStore('roles', roles);
     setStore('saveLogin', saveLogin);
