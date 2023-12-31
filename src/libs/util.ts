@@ -3,10 +3,14 @@
 // import lazyLoading from './lazyLoading.js';
 // import Cookies from 'js-cookie';
 
+import React from 'react';
+
 interface utilType {
   title: (arg1?: string) => void;
   awaitWrap: <T, U = any>(promise: Promise<T>) => Promise<[U | null, T | null]>;
   oneOf: (arg1: string, arg2: string[]) => boolean;
+  lazyLoading: (arg1: string) => any;
+  deepClone: (arg1: any) => any;
   // toDefaultPage: (
   //   arg1: RouteRecordRaw[],
   //   arg2: string,
@@ -28,6 +32,39 @@ const util: utilType = {
       return true;
     }
     return false;
+  },
+  lazyLoading(url) {
+    // const modules = import.meta.glob(['../views/*/*.tsx', '../views/*/*/*.tsx']);
+    return import(`@/views/${url}`);
+    // return React.lazy(require(`@/views/${url}`));
+  },
+  deepClone(obj) {
+    // 可传入对象 或 数组
+    //  判断是否为 null 或 undefined 直接返回该值即可,
+    if (obj === null || !obj) return obj;
+    // 判断 是要深拷贝 对象 还是 数组
+    if (Object.prototype.toString.call(obj) === '[object Object]') {
+      // 对象字符串化的值会为 "[object Object]"
+      const target = {}; // 生成新的一个对象
+      const keys = Object.keys(obj); // 取出对象所有的key属性 返回数组 keys = [ ]
+      // 遍历复制值, 可用 for 循环代替性能较好
+      keys.forEach(key => {
+        if (obj[key] && typeof obj[key] === 'object')
+          // 如果遇到的值又是 引用类型的 [ ] {} ,得继续深拷贝
+          target[key] = this.deepClone(obj[key]); // 递归
+        else target[key] = obj[key];
+      });
+      return target; // 返回新的对象
+    }
+    if (Array.isArray(obj)) {
+      // 数组同理
+      const arr: any[] = [];
+      obj.forEach((item, index) => {
+        if (item && typeof item === 'object') arr[index] = this.deepClone(item);
+        else arr[index] = item;
+      });
+      return arr;
+    }
   }
   // toDefaultPage(routers, name, route, next) {
   //   const len = routers.length;

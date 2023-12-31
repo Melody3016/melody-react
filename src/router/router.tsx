@@ -247,8 +247,8 @@ export const routers = [
   // reset,
   //   relateRouter,
   //   authorizeRouter,
-  otherRouter,
-  ...appRouter
+  ...appRouter,
+  otherRouter
   //   page500,
   //   page403
 ];
