@@ -7,7 +7,7 @@ import { setStore } from '@/libs/storage';
 const useAfterLogin = () => {
   const navigate = useNavigate();
   const { fetchData } = useAxios();
-  const afterLogin = async (token: string, saveLogin: boolean = false) => {
+  const afterLogin = async (token: string, saveLogin = false) => {
     // 登录成功，获取到token，获取用户信息，进行路由动态加载
     setStore('accessToken', token);
     // 获取用户信息

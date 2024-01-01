@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
-// import useInitRouter from '@/hooks/useInitRouter';
-// import { RoutersContext, SetRoutersContext } from '@/router/RoutersContext';
-// import util from '@/libs/util';
+import useInitRouter from '@/hooks/useInitRouter';
+import { RoutersContext, SetRoutersContext } from '@/router/RoutersContext';
+import util from '@/libs/util';
 
 const Main: React.FC = () => {
   // const routers = useContext(RoutersContext);
   // const setRouters = useContext(SetRoutersContext);
-  // const { getMenuData } = useInitRouter();
+  const { getMenuData } = useInitRouter();
 
   useEffect(() => {
     const getRouters = async () => {

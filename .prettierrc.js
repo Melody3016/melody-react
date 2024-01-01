@@ -8,5 +8,4 @@ module.exports = {
   jsxSingleQuote: true, // 在jsx里是否使用单引号，你看着办
   bracketSpacing: true, // 对象大括号直接是否有空格，默认为true，效果：{ foo: bar }
   arrowParens: 'avoid' // 箭头函数如果只有一个参数则省略括号
-  endOfLine: 'lf'
 };

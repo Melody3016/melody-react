@@ -15,7 +15,9 @@ const useLogin = () => {
   };
 
   // 手机短信登录
-  const loginByMobile = () => {};
+  const loginByMobile = () => {
+    console.log('手机短信登录 => loginByMobile');
+  };
   return {
     loginByAccount,
     loginByMobile
