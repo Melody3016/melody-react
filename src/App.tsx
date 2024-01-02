@@ -1,16 +1,28 @@
-import { useState } from 'react';
 import { ConfigProvider } from 'antd';
+import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
 import BeforeEach from './router/beforeEach';
-import { routers as initialRouters } from './router/router';
-// import { routers } from './router/router';
-// import routersReducer from './router/routersReducer';
-import { RoutersContext, SetRoutersContext } from './router/RoutersContext';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { insetRouter, selectRouters } from '@/store/reducers/appSlice';
 import './app.scss';
+import useInitRouter from './hooks/useInitRouter';
 
 function App() {
-  // const [routers, dispatch] = useReducer(routersReducer, initialRouters);
-  const [routers, setRouters] = useState(initialRouters);
+  const dispatch = useAppDispatch();
+  const routers = useAppSelector(selectRouters);
+  const { getMenuData, getDynamicRoutes } = useInitRouter();
+
+  useEffect(() => {
+    const getRouters = async () => {
+      const res = await getMenuData();
+      if (!res) return;
+      const newRouters = getDynamicRoutes(res);
+      // 将后台返回封装好的routers添加到路由表中
+      dispatch(insetRouter(newRouters));
+    };
+    getRouters();
+  }, []);
+
   console.log('app.tsx ==> routers', routers);
   const element = useRoutes(routers);
   return (
@@ -23,12 +35,7 @@ function App() {
       }}
     >
       {/* <BeforeEach>{element}</BeforeEach> */}
-
-      <RoutersContext.Provider value={routers}>
-        <SetRoutersContext.Provider value={setRouters}>
-          <BeforeEach>{element}</BeforeEach>
-        </SetRoutersContext.Provider>
-      </RoutersContext.Provider>
+      <BeforeEach>{element}</BeforeEach>
     </ConfigProvider>
   );
 }

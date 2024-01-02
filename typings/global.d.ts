@@ -72,3 +72,14 @@ declare module '*.png' {
 //   meta?: Object;
 //   children?: IRouter;
 // };
+interface INav {
+  name: string;
+  title: string;
+  icon: string;
+  isMenu: boolean;
+  url: string;
+  description: string;
+  component: string;
+  localize: boolean;
+  i18n: string;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import NotFound from '@/views/error-page/404';
 // import util from '@/libs/util';
 // import Main from '@/views/Main';
 // import Login from '@/views/auth/login';
@@ -130,15 +131,13 @@ export const reset = {
   component: () => import('@/views/auth/authorize.vue')
 }; */
 
-// export const page404 = {
-//     path: '/*',
-//     name: 'error-404',
-//     meta: {
-//         title: '404-页面不存在'
-//     },
-//     component: () => import('@/views/error-page/404.vue')
-// };
-
+export const page404 = {
+  path: '*',
+  meta: {
+    title: '404-页面不存在'
+  },
+  element: <NotFound />
+};
 /* export const page403 = {
   path: '/403',
   meta: {
@@ -159,7 +158,7 @@ export const reset = {
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 // const RedirectComponent = () => <Navigate to="/home" replace />;
-const LazyMain = React.lazy(() => import('@/views/Main'));
+const LazyMain = React.lazy(() => import('@/views/main-view'));
 const LazyHome = React.lazy(() => import('@/views/home/Home'));
 const LazyOwnSpace = React.lazy(() => import('@/views/own-space/own-space'));
 export const otherRouter = {

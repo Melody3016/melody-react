@@ -1,16 +1,15 @@
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
 import useAxios from './useAxios';
 import { getMenuList } from '@/api';
 import util from '@/libs/util';
-import Main from '@/views/Main';
+import { selectHasAddRouters, selectHasMenuData, setHasMenuData } from '@/store/reducers/appSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const useInitRouter = () => {
-  // 从store中获取是否已经获取菜单数据
-  const hasMenuData = false;
-  // 从store中获取是否已经添加新路由
-  // const hasAddRouters = false;
-  const [dynamicRoutes, setDynamicRoutes] = useState([]);
+  const dispatch = useAppDispatch();
+  // 从store中获取数据
+  const hasMenuData = useAppSelector(selectHasMenuData);
+  const hasAddRouters = useAppSelector(selectHasAddRouters);
 
   // 获取菜单数据
   const { fetchData } = useAxios();
@@ -24,87 +23,19 @@ const useInitRouter = () => {
     // 判断是否已经获取过菜单数据
     if (hasMenuData) return;
     // 获取菜单数据
-    // const res = await fetchData(getMenuList);
-    const res = [
-      {
-        id: '125909152017944576',
-        parentId: '0',
-        name: 'xboot',
-        showAlways: true,
-        level: 0,
-        type: -1,
-        title: 'XBoot管理系统',
-        path: '',
-        component: 'normal',
-        icon: 'md-home',
-        isMenu: true,
-        url: '',
-        localize: true,
-        i18n: 'xbootAdmin',
-        description: 'undefined',
-        buttonType: '',
-        children: [
-          {
-            id: '5129710648430592',
-            parentId: '125909152017944576',
-            name: 'sys',
-            showAlways: true,
-            level: 1,
-            type: 0,
-            title: '系统管理',
-            path: '/sys',
-            component: 'Main',
-            icon: 'ios-settings',
-            isMenu: true,
-            url: '',
-            localize: false,
-            i18n: null,
-            description: '',
-            buttonType: '',
-            children: [
-              {
-                id: '5129710648430593',
-                parentId: '5129710648430592',
-                name: 'user-manage',
-                showAlways: true,
-                level: 2,
-                type: 0,
-                title: '用户管理',
-                path: 'user-manage',
-                component: 'sys/user-manage/userManage',
-                icon: 'md-person',
-                isMenu: true,
-                url: '',
-                localize: false,
-                i18n: '',
-                description: '',
-                buttonType: '',
-                children: null,
-                permTypes: []
-              }
-            ],
-            permTypes: null
-          }
-        ],
-        permTypes: null
-      }
-    ];
-    // 错误处理
-    // if (!res) return;
-    // setDynamicRoutes(getDynamicRoutes(res));
-    // const r = getDynamicRoutes(res);
-    // console.log('r', r);
-    // return r;
-    // console.log(getDynamicRoutes(res));
-    // dispatch修改store中的menuData
-    // menuData.value = res.result || [];
+    const res = await fetchData(getMenuList);
     // 标识已经获取菜单数据
-    // hasMenuData.value = true;
+    dispatch(setHasMenuData());
+    return res;
   };
 
   // 处理获得路由数据
   const getDynamicRoutes = (menuData: IMenuListRes[]) => {
-    const dynamicRoutes = [];
+    console.log('hasAddRouters', hasAddRouters);
+
+    // 判断是否已经添加路由
+    if (hasAddRouters) return;
+    const dynamicRoutes: any[] = [];
     for (const item of menuData) {
       if (item.type === -1 && item.children) {
         handleRoute(dynamicRoutes, item);
@@ -121,12 +52,14 @@ const useInitRouter = () => {
       route.path = item.name;
       // level为1代表无需配置路由
       if (item.level === 1) {
-        const element = util.lazyLoading('Main');
-        route.element = React.createElement(element);
+        // route.element = React.lazy(() => import('@/views/Main'));
+        // route.element = util.lazyLoading('Main');
+        // route.element = React.createElement(util.lazyLoading('Main'));
       }
       if (item.level === 2) {
         const element = util.lazyLoading(item.component);
-        route.element = React.createElement(element);
+        route.element = element;
+        // route.lazy = util.lazyLoading(item.component);
       }
 
       if (item.children && item.children.length > 0) {
@@ -148,9 +81,43 @@ const useInitRouter = () => {
     }
   };
 
+  // 封装导航条navList数据
+  const handleNavList = (data: IMenuListRes[]) => {
+    if (!data) return;
+    const navList: INav[] = [];
+    // 类型 -1顶部菜单
+    for (const item of data) {
+      if (item.type === -1) {
+        const nav = {
+          name: item.name,
+          title: item.title,
+          icon: item.icon,
+          isMenu: item.isMenu,
+          url: item.url,
+          description: item.description,
+          component: item.component,
+          localize: item.localize,
+          i18n: item.i18n
+        };
+        navList.push(nav);
+      }
+    }
+  };
+
+  // 封装左侧菜单menuList数据
+  /* const handleMenuList = (name: string | number, menuData: IMenuListRes[]) => {
+    for (const item of menuData) {
+      if (item.name == name) {
+        // 过滤
+        menuList.value = item.children || [];
+      }
+    }
+    currNavName.value = name as string;
+  }; */
+
   return {
     getMenuData,
-    dynamicRoutes
+    getDynamicRoutes
   };
 };
 export default useInitRouter;

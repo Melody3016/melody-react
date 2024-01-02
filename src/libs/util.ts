@@ -35,8 +35,17 @@ const util: utilType = {
   },
   lazyLoading(url) {
     // const modules = import.meta.glob(['../views/*/*.tsx', '../views/*/*/*.tsx']);
-    return import(`@/views/${url}`);
-    // return React.lazy(require(`@/views/${url}`));
+    // return import(`@/views/${url}`);
+    return React.createElement(React.lazy(() => import(`@/views/${url}`)));
+    // const OtherComponent = React.lazy(
+    //   () =>
+    //     new Promise((resolve, reject) => {
+    //       import(`@/views/${url}`)
+    //         .then(result => resolve(result.default ? result : { default: result }))
+    //         .catch(reject);
+    //     })
+    // );
+    // return OtherComponent;
   },
   deepClone(obj) {
     // 可传入对象 或 数组
