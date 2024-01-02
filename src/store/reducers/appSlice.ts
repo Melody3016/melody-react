@@ -6,12 +6,14 @@ export interface AppState {
   routers: any[];
   hasAddRouters: boolean;
   hasMenuData: boolean;
+  menuList: IMenuListRes[];
 }
 
 const initialState: AppState = {
   routers,
   hasAddRouters: false,
-  hasMenuData: false
+  hasMenuData: false,
+  menuList: []
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -48,6 +50,9 @@ export const appSlice = createSlice({
     },
     setHasMenuData: state => {
       state.hasMenuData = true;
+    },
+    setMenuList: (state, action: PayloadAction<IMenuListRes[]>) => {
+      state.menuList = action.payload;
     }
   }
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -67,7 +72,7 @@ export const appSlice = createSlice({
   } */
 });
 
-export const { insetRouter, setHasMenuData } = appSlice.actions;
+export const { insetRouter, setHasMenuData, setMenuList } = appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -75,6 +80,7 @@ export const { insetRouter, setHasMenuData } = appSlice.actions;
 export const selectRouters = (state: RootState) => state.app.routers;
 export const selectHasAddRouters = (state: RootState) => state.app.hasAddRouters;
 export const selectHasMenuData = (state: RootState) => state.app.hasMenuData;
+export const selectMenuList = (state: RootState) => state.app.menuList;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

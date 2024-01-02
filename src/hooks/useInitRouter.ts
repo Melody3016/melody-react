@@ -105,19 +105,21 @@ const useInitRouter = () => {
   };
 
   // 封装左侧菜单menuList数据
-  /* const handleMenuList = (name: string | number, menuData: IMenuListRes[]) => {
+  const handleMenuList = (name: string | number, menuData: IMenuListRes[]) => {
+    let menuList: IMenuListRes[] = [];
     for (const item of menuData) {
-      if (item.name == name) {
+      if (item.name === name) {
         // 过滤
-        menuList.value = item.children || [];
+        menuList = item.children || [];
       }
     }
-    currNavName.value = name as string;
-  }; */
+    return menuList;
+  };
 
   return {
     getMenuData,
-    getDynamicRoutes
+    getDynamicRoutes,
+    handleMenuList
   };
 };
 export default useInitRouter;

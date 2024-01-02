@@ -1,13 +1,6 @@
 .main {
   height: 100%;
 
-  :global(.navBar) {
-    display: flex;
-    margin-bottom: 5px;
-    padding: 0;
-    box-shadow: 0 2px 1px 1px hsla(0, 0%, 39.2%, 0.1);
-  }
-
   .navTags {
     box-shadow: 0 2px 1px 1px hsla(0, 0%, 39.2%, 0.1);
     z-index: 1;
@@ -41,4 +34,26 @@
     height: 800px;
     background-color: aquamarine;
   }
+}
+
+:global(.leftMenu) {
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+:global(.demo-logo-vertical) {
+  height: 60px;
+  color: #fff;
+  // background: url('@/assets/images/logo.png') no-repeat;
+  // background-size: cover;
+  // background-position: center center;
+  // filter: grayscale(100%);
+}
+
+:global(.navBar) {
+  display: flex;
+  margin-bottom: 5px;
+  padding: 0;
+  box-shadow: 0 2px 1px 1px hsla(0, 0%, 39.2%, 0.1);
 }

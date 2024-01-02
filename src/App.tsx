@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { useRoutes } from 'react-router-dom';
 import BeforeEach from './router/beforeEach';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { insetRouter, selectRouters } from '@/store/reducers/appSlice';
+import { insetRouter, selectRouters, setMenuList } from '@/store/reducers/appSlice';
 import './app.scss';
 import useInitRouter from './hooks/useInitRouter';
 
 function App() {
   const dispatch = useAppDispatch();
   const routers = useAppSelector(selectRouters);
-  const { getMenuData, getDynamicRoutes } = useInitRouter();
+  const { getMenuData, getDynamicRoutes, handleMenuList } = useInitRouter();
 
   useEffect(() => {
     const getRouters = async () => {
@@ -19,6 +19,9 @@ function App() {
       const newRouters = getDynamicRoutes(res);
       // 将后台返回封装好的routers添加到路由表中
       dispatch(insetRouter(newRouters));
+      // 将左侧菜单添加到store中
+      const menuList = handleMenuList(res[0].name, res);
+      dispatch(setMenuList(menuList));
     };
     getRouters();
   }, []);
