@@ -1,30 +1,33 @@
 import { ConfigProvider } from 'antd';
 import { useEffect } from 'react';
-import { useRoutes } from 'react-router-dom';
+import { useRoutes, useLocation } from 'react-router-dom';
 import BeforeEach from './router/beforeEach';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { insetRouter, selectRouters, setMenuList } from '@/store/reducers/appSlice';
+import { selectRouters, setMenuList, setMenuData, insetRouter } from '@/store/reducers/appSlice';
 import './app.scss';
 import useInitRouter from './hooks/useInitRouter';
 
 function App() {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const routers = useAppSelector(selectRouters);
-  const { getMenuData, getDynamicRoutes, handleMenuList } = useInitRouter();
+  const { getMenuData, getDynamicRoutes } = useInitRouter();
 
+  const initMainViewData = async () => {
+    const res = await getMenuData();
+    if (!res) return;
+    // 将菜单数据添加到store中
+    dispatch(setMenuData(res));
+    // 将左侧菜单添加到store中
+    dispatch(setMenuList(res[0].name));
+    // 将后台返回封装好的routers添加到路由表中
+    const newRouters = getDynamicRoutes(res);
+    dispatch(insetRouter(newRouters));
+  };
+  // 获取数据
   useEffect(() => {
-    const getRouters = async () => {
-      const res = await getMenuData();
-      if (!res) return;
-      const newRouters = getDynamicRoutes(res);
-      // 将后台返回封装好的routers添加到路由表中
-      dispatch(insetRouter(newRouters));
-      // 将左侧菜单添加到store中
-      const menuList = handleMenuList(res[0].name, res);
-      dispatch(setMenuList(menuList));
-    };
-    getRouters();
-  }, []);
+    initMainViewData();
+  }, [location.pathname]);
 
   console.log('app.tsx ==> routers', routers);
   const element = useRoutes(routers);

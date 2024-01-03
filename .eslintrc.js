@@ -23,7 +23,7 @@ module.exports = {
   rules: {
     // eslint (http://eslint.cn/docs/rules)
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
-    'no-console': 0,
+    'no-console': 1,
     '@typescript-eslint/no-unused-vars': 1, // 禁止定义未使用的变量
     'class-methods-use-this': 'off',
     'no-param-reassign': 'off',

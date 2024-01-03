@@ -11,6 +11,7 @@ interface utilType {
   oneOf: (arg1: string, arg2: string[]) => boolean;
   lazyLoading: (arg1: string) => any;
   deepClone: (arg1: any) => any;
+  handleMenuList: (arg1: string, arg2: IMenuListRes[]) => IMenuListRes[];
   // toDefaultPage: (
   //   arg1: RouteRecordRaw[],
   //   arg2: string,
@@ -74,6 +75,17 @@ const util: utilType = {
       });
       return arr;
     }
+  },
+  // 封装左侧菜单menuList数据
+  handleMenuList(name: string, menuData: IMenuListRes[]) {
+    let menuList: IMenuListRes[] = [];
+    for (const item of menuData) {
+      if (item.name === name) {
+        // 过滤
+        menuList = item.children || [];
+      }
+    }
+    return menuList;
   }
   // toDefaultPage(routers, name, route, next) {
   //   const len = routers.length;

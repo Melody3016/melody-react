@@ -11,9 +11,9 @@ interface MyComponentProps {
 const beforeEach: React.FC<MyComponentProps> = ({ children }) => {
   // 拿到路由组件信息
   const navigate = useNavigate();
-  const route = useLocation();
+  const location = useLocation();
 
-  const name = String(route.pathname);
+  const name = String(location.pathname);
   // 白名单
   const whiteList = [
     '/login',
@@ -29,6 +29,8 @@ const beforeEach: React.FC<MyComponentProps> = ({ children }) => {
   // 监听路由变化：route.pathname
   useEffect(() => {
     const title =
+      children?.props?.routeContext?.outlet?.props?.routeContext?.outlet?.props?.match?.route?.meta
+        ?.title ||
       children?.props?.routeContext?.outlet?.props?.match?.route?.meta?.title ||
       children?.props?.match?.route?.meta?.title;
     util.title(String(title));
