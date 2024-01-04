@@ -73,6 +73,7 @@ declare module '*.png' {
 //   children?: IRouter;
 // };
 declare interface INav {
+  id: string;
   name: string;
   title: string;
   icon: string;

@@ -24,7 +24,9 @@ const useInitRouter = () => {
     // 获取菜单数据
     const res = await fetchData(getMenuList);
     // 标识已经获取菜单数据
-    dispatch(setHasMenuData(true));
+    if (res) {
+      dispatch(setHasMenuData(true));
+    }
     return res;
   };
 

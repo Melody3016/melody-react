@@ -56,9 +56,13 @@ export const appSlice = createSlice({
     setHasMenuData: (state, action: PayloadAction<boolean>) => {
       state.hasMenuData = action.payload;
     },
+    setHasAddRouters: (state, action: PayloadAction<boolean>) => {
+      state.hasAddRouters = action.payload;
+    },
     setMenuData: (state, action: PayloadAction<IMenuListRes[]>) => {
       state.menuData = action.payload;
       state.navList = action.payload.map(item => ({
+        id: item.id,
         title: item.title,
         name: item.name,
         icon: item.icon,
@@ -89,7 +93,8 @@ export const appSlice = createSlice({
   } */
 });
 
-export const { insetRouter, setHasMenuData, setMenuList, setMenuData } = appSlice.actions;
+export const { insetRouter, setHasMenuData, setMenuList, setMenuData, setHasAddRouters } =
+  appSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

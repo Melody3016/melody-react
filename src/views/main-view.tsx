@@ -1,15 +1,9 @@
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined
-} from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Tag, MenuProps } from 'antd';
-import { useEffect, useState } from 'react';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Menu, Button, theme, Tag, MenuProps, Skeleton } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import style from './main-view.scss';
-import { selectMenuList } from '@/store/reducers/appSlice';
+import { selectMenuList, selectNavList } from '@/store/reducers/appSlice';
 import { useAppSelector } from '@/store/hooks';
 
 const { Header, Sider, Content } = Layout;
@@ -23,7 +17,40 @@ const MainView: React.FC = () => {
   // 路由
   const navigate = useNavigate();
 
-  // 左侧菜单数据
+  // 顶部导航条
+  const [navItems, setNavItems] = useState<MenuProps['items']>([]);
+  const [selectedNav, setSelectedNav] = useState<string[]>([]);
+  const navList = useAppSelector(selectNavList);
+  const handleNavMenu = (list: INav[]) => {
+    const menu: any = [];
+    list.forEach(item => {
+      const obj: any = {};
+      obj.key = item.id;
+      obj.label = item.title;
+      obj.icon = <UserOutlined />;
+      menu.push(obj);
+    });
+    return menu;
+  };
+  const handleClickNav = ({ key }) => {
+    setSelectedNav([key]);
+    const item = navList.find(ele => ele.id === key);
+    // 判断url并进行跳转
+    if (item && item.url) {
+      window.open(item.url);
+    }
+    // 切换左侧menu
+  };
+  useEffect(() => {
+    const menu = handleNavMenu(navList);
+    setSelectedNav([menu[0]?.key]);
+    setNavItems(menu);
+  }, [navList]);
+
+  // 左侧菜单
+  const handleBreakpoint = broken => {
+    setCollapsed(broken);
+  };
   const menuList = useAppSelector(selectMenuList);
   // 处理左侧菜单数据
   const handleLeftMenu = (list: IMenuListRes[]) => {
@@ -57,7 +84,6 @@ const MainView: React.FC = () => {
     navigate(item.props.path);
   };
   // 只展开当前父级菜单
-  // submenu keys of first level
   const [rootSubmenuKeys, setRootSubmenuKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const onOpenChange: MenuProps['onOpenChange'] = keys => {
@@ -78,20 +104,33 @@ const MainView: React.FC = () => {
   return (
     <div className={style.main}>
       <Layout style={{ height: '100%' }}>
-        <Sider className='leftMenu' width={220} trigger={null} collapsible collapsed={collapsed}>
+        <Sider
+          className='leftMenu'
+          width={220}
+          trigger={null}
+          theme='light'
+          collapsible
+          collapsed={collapsed}
+          breakpoint='md'
+          onBreakpoint={handleBreakpoint}
+        >
           <div className='demo-logo-vertical'>
-            <p>React</p>
-            <p>前后端分离快速开发平台</p>
+            {collapsed ? <p>平台</p> : <p>前后端分离快速开发平台</p>}
           </div>
           <Menu
-            theme='dark'
             mode='inline'
             items={leftItems}
             openKeys={openKeys}
             onOpenChange={onOpenChange}
             onClick={leftMenuClick}
-            style={{ width: 220 }}
           />
+          {leftItems?.length === 0 && (
+            <Skeleton
+              active
+              title={{ width: 180 }}
+              paragraph={{ rows: 18, width: Array(20).fill(180) }}
+            />
+          )}
         </Sider>
         <Layout>
           <Header className='navBar' style={{ background: colorBgContainer }}>
@@ -106,27 +145,13 @@ const MainView: React.FC = () => {
               }}
             />
             <Menu
-              style={{ flex: 1 }}
+              style={{ flex: 1, width: '70%', minWidth: 200 }}
               mode='horizontal'
-              defaultSelectedKeys={['1']}
-              items={[
-                {
-                  key: '1',
-                  icon: <UserOutlined />,
-                  label: 'nav 1'
-                },
-                {
-                  key: '2',
-                  icon: <VideoCameraOutlined />,
-                  label: 'nav 2'
-                },
-                {
-                  key: '3',
-                  icon: <UploadOutlined />,
-                  label: 'nav 3'
-                }
-              ]}
+              selectedKeys={selectedNav}
+              items={navItems}
+              onClick={handleClickNav}
             />
+            <div className={style.rightTopBox}>退出登录</div>
           </Header>
           <div className={style.navTags}>
             <div className={style.scrollContent}>

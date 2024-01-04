@@ -2,11 +2,14 @@ import Cookies from 'js-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { message as Message } from 'antd';
 import { setStore } from '@/libs/storage';
+import { useAppDispatch } from '@/store/hooks';
+import { setHasAddRouters, setHasMenuData } from '@/store/reducers/appSlice';
 
 const useAxios = () => {
   // const [res, setRes] = useState<T>();
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -70,6 +73,9 @@ const useAxios = () => {
           // 未登录 清除已登录状态
           Cookies.set('userInfo', '');
           setStore('accessToken', '');
+          // 清除store中的标记
+          dispatch(setHasMenuData(false));
+          dispatch(setHasAddRouters(false));
           if (location.pathname !== 'login') {
             if (message !== null) {
               Message.error(message);

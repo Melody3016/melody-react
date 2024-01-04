@@ -1,6 +1,9 @@
 .main {
   height: 100%;
 
+  .rightTopBox {
+    width: 150px;
+  }
   .navTags {
     box-shadow: 0 2px 1px 1px hsla(0, 0%, 39.2%, 0.1);
     z-index: 1;
@@ -36,6 +39,7 @@
   }
   :global(.leftMenu) {
     overflow-y: auto;
+    box-shadow: 2px 0 8px #1d23290d;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -45,12 +49,15 @@
     }
   }
   :global(.demo-logo-vertical) {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 60px;
+    text-align: center;
     height: 60px;
-    color: #fff;
-    // background: url('@/assets/images/logo.png') no-repeat;
-    // background-size: cover;
-    // background-position: center center;
-    // filter: grayscale(100%);
+    color: #0074a6;
+  }
+  :global(.ant-skeleton) {
+    padding: 20px 0 0 20px;
   }
 
   :global(.navBar) {
