@@ -133,7 +133,10 @@ const MainView: React.FC = () => {
           )}
         </Sider>
         <Layout>
-          <Header className='navBar' style={{ background: colorBgContainer }}>
+          <Header
+            className='navBar'
+            style={{ background: colorBgContainer, justifyContent: 'space-between' }}
+          >
             <Button
               type='text'
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -145,7 +148,7 @@ const MainView: React.FC = () => {
               }}
             />
             <Menu
-              style={{ flex: 1, width: '70%', minWidth: 200 }}
+              style={{ flex: 1, minWidth: 200 }}
               mode='horizontal'
               selectedKeys={selectedNav}
               items={navItems}
