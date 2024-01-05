@@ -58,6 +58,7 @@ interface IUserInfoRes {
   username: string;
   permissions?: permissionsStates[];
   roles?: rolesStates[];
+  key?: string;
 }
 
 // 菜单接口返回类型

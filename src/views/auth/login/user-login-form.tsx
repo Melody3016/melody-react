@@ -32,16 +32,14 @@ const UserLoginForm: React.FC = () => {
         params
       );
       if (accessToken) {
-        console.log('登录成功！', accessToken);
         await afterLogin(accessToken, formValues.saveLogin);
         // const { afterLogin } = useAfterLogin(instance);
         // await afterLogin(accessToken, saveLogin.value);
       } else {
-        form.resetFields();
+        form.resetFields(['code']);
       }
       setLoginLoading(false);
     } catch (error) {
-      console.log('submitLogin error', error);
       setLoginLoading(false);
       messageApi.error('请正确填写！');
       getCaptchaImg();

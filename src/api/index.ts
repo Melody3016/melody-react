@@ -114,10 +114,17 @@ export const addUser = (params: IUserInfoRes) => {
 export const deleteUser = (params: { ids: string }) => {
   return postRequest<IData<{}>>('/user/delByIds', params);
 };
-
+// 导入用户
+// export const importUserData = (params) => {
+//   return postBodyRequest('/user/importData', params)
+// }
 // 获取用户数据 多条件
 export const getUserListData = (params: IUserListParam) => {
   return getRequest<IData<IUserListRes>>('/user/getByCondition', params);
+};
+// 获取全部用户数据
+export const getAllUserData = () => {
+  return getRequest<IData<IUserListRes>>('/user/getAll', null);
 };
 
 // 获取一级部门

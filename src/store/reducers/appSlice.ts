@@ -47,7 +47,7 @@ export const appSlice = createSlice({
       const lastIndex = state.routers.length - 1;
       // 将后台返回封装好的routers添加到路由表中
       for (const item of action.payload) {
-        state.routers[lastIndex].children.push(item);
+        state.routers[lastIndex].children?.push(item);
       }
       // 添加404路由
       state.routers.push(page404);

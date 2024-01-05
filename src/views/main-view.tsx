@@ -2,6 +2,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/
 import { Layout, Menu, Button, theme, Tag, MenuProps, Skeleton } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import Footer from './main-components/footer';
 import style from './main-view.scss';
 import { selectMenuList, selectNavList } from '@/store/reducers/appSlice';
 import { useAppSelector } from '@/store/hooks';
@@ -171,10 +172,8 @@ const MainView: React.FC = () => {
               overflow: 'auto'
             }}
           >
-            <h1>This is Main</h1>
-            <div className={style.bigBox}></div>
-            <br />
             <Outlet />
+            <Footer />
           </Content>
         </Layout>
       </Layout>

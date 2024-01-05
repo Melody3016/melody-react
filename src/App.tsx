@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd';
 import { useEffect } from 'react';
 import { useRoutes, useLocation } from 'react-router-dom';
+import zhCN from 'antd/locale/zh_CN';
 import BeforeEach from './router/beforeEach';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectRouters, setMenuList, setMenuData, insetRouter } from '@/store/reducers/appSlice';
@@ -39,6 +40,7 @@ function App() {
           colorPrimary: '#0074a6'
         }
       }}
+      locale={zhCN}
     >
       {/* <BeforeEach>{element}</BeforeEach> */}
       <BeforeEach>{element}</BeforeEach>
