@@ -112,7 +112,7 @@ const MainView: React.FC = () => {
           theme='light'
           collapsible
           collapsed={collapsed}
-          breakpoint='md'
+          breakpoint='lg'
           onBreakpoint={handleBreakpoint}
         >
           <div className='demo-logo-vertical'>

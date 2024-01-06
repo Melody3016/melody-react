@@ -12,6 +12,7 @@ interface utilType {
   lazyLoading: (arg1: string) => any;
   deepClone: (arg1: any) => any;
   handleMenuList: (arg1: string, arg2: IMenuListRes[]) => IMenuListRes[];
+  addKey: (arr: any[]) => void;
   // toDefaultPage: (
   //   arg1: RouteRecordRaw[],
   //   arg2: string,
@@ -86,6 +87,14 @@ const util: utilType = {
       }
     }
     return menuList;
+  },
+  addKey(arr) {
+    arr.forEach(item => {
+      item.key = item.id;
+      if (item.children && item.children instanceof Array) {
+        this.addKey(item.children);
+      }
+    });
   }
   // toDefaultPage(routers, name, route, next) {
   //   const len = routers.length;

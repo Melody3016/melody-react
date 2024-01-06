@@ -166,3 +166,68 @@ interface IDepRes {
     username: string;
   }[];
 }
+// 获取权限菜单树返回结果类型
+interface IPermissionRes {
+  // 唯一标识
+  id: string;
+  // 创建者
+  createBy: string;
+  // 创建时间
+  createTime: string;
+  // 更新者
+  updateBy: string;
+  // 更新时间
+  updateTime: string;
+  // 删除标志 默认0
+  delFlag: number;
+  // 菜单/权限名称
+  name: string;
+  // 始终显示 默认是
+  showAlway: boolean;
+  // 层级
+  level: number;
+  // 类型 -1顶部菜单 0页面 1具体操作
+  type: -1 | 0 | 1;
+  // 菜单标题
+  title: string;
+  // 页面路径/资源链接url
+  path: string;
+  // 前端组件
+  component: string;
+  // 图标
+  icon: string;
+  // 按钮权限类型
+  buttonType: string;
+  // 是否为站内菜单默认true
+  isMenu: boolean;
+  // 网页链接
+  url: string;
+  // 是否启用多语言 默认false
+  localize: boolean;
+  // i18n渲染key
+  i18n: string;
+  // 顶部菜单打开方式
+  description: string;
+  // 父id
+  parentId: string;
+  // 是否为父节点(含子节点) 默认false
+  isParent: boolean;
+  // 排序值
+  sortOrder: number;
+  // 是否启用 0启用 -1禁用
+  status: 0 | 1;
+  // 父节点名称
+  parentTitle: string;
+  // 节点展开 前端所需
+  expand: boolean;
+  // 是否勾选 前端所需
+  checked: boolean;
+  // 是否选中 前端所需
+  selected: boolean;
+  // 页面拥有的权限类型
+  permTypes: string[];
+  // 子菜单/权限
+  children?: IPermissionRes[];
+  // key用于表格渲染
+  key?: string;
+}

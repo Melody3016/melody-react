@@ -145,3 +145,30 @@ export const loadDepartment = (
 export const searchDepartment = (params: { title: string; openDataFilter?: boolean }) => {
   return getRequest<IData<IDepRes[]>>('/department/search', params);
 };
+
+// 获取全部权限数据
+export const getAllPermissionList = () => {
+  return getRequest<IData<IPermissionRes[]>>('/permission/getAllList', null);
+};
+// 加载数据
+export const loadPermission = (id: string) => {
+  return getRequest<IData<IPermissionRes[]>>(`/permission/getByParentId/${id}`, null);
+};
+/*
+// 添加权限
+export const addPermission = (params) => {
+  return postRequest('/permission/add', params)
+}
+// 编辑权限
+export const editPermission = (params) => {
+  return postRequest('/permission/edit', params)
+}
+// 删除权限
+export const deletePermission = (params) => {
+  return postRequest('/permission/delByIds', params)
+}
+// 搜索权限
+export const searchPermission = (params) => {
+  return getRequest('/permission/search', params)
+}
+*/

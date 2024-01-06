@@ -79,3 +79,4 @@ declare interface INav {
   icon: string;
   url: string;
 }
+declare type ModeType = 'tree' | 'table';
