@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Card } from 'antd';
-import { PlusSquareOutlined } from '@ant-design/icons';
 import MmOperate from './mmOperate';
 import style from './menu-manage.scss';
 import MyTable from '@/views/my-components/origin/my-table';
 import { menuManageColumn } from '@/libs/tableColumns';
 import useMenuState from './useMenuState';
+import MenuTree from './menu-tree';
 
 const MenuManage: React.FC = () => {
   // 切换模式
@@ -18,11 +18,11 @@ const MenuManage: React.FC = () => {
   }, []);
   return (
     <div className={style.menuManage}>
-      <Card>
+      <Card style={{ minWidth: 620 }}>
         {/* Operate组件 */}
         <MmOperate mode={mode} setMode={setMode} />
         {/* Tree组件 */}
-        {mode === 'tree' && <div>Tree</div>}
+        {mode === 'tree' && <MenuTree />}
         {/* Table组件 */}
         {mode === 'table' && (
           <MyTable
