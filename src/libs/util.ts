@@ -3,6 +3,7 @@
 // import lazyLoading from './lazyLoading.js';
 // import Cookies from 'js-cookie';
 
+import { DataNode } from 'antd/es/tree';
 import React from 'react';
 
 interface utilType {
@@ -13,6 +14,8 @@ interface utilType {
   deepClone: (arg1: any) => any;
   handleMenuList: (arg1: string, arg2: IMenuListRes[]) => IMenuListRes[];
   addKey: (arr: any[]) => void;
+  transToDataNode: (arr: any[]) => DataNode[];
+  findOneOfItem: (arr: any[], key: string) => any;
   // toDefaultPage: (
   //   arg1: RouteRecordRaw[],
   //   arg2: string,
@@ -95,6 +98,38 @@ const util: utilType = {
         this.addKey(item.children);
       }
     });
+  },
+  transToDataNode(arr) {
+    const res: DataNode[] = [];
+    function transform(item): DataNode {
+      const node: DataNode = {
+        key: item.id,
+        title: item.title
+      };
+
+      if (item.children && item.children.length > 0) {
+        node.children = item.children.map(transform);
+      }
+
+      return node;
+    }
+
+    res.push(...arr.map(transform));
+    return res;
+  },
+  findOneOfItem(arr, key) {
+    let obj = {};
+    const find = chd => {
+      chd.forEach(item => {
+        if (item.id === key) {
+          obj = item;
+        } else if (item.children && item.children.length > 0) {
+          find(item.children);
+        }
+      });
+    };
+    find(arr);
+    return obj;
   }
   // toDefaultPage(routers, name, route, next) {
   //   const len = routers.length;

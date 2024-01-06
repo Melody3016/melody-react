@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Card } from 'antd';
-import MmOperate from './mmOperate';
+import MmOperate from './components/mmOperate';
 import style from './menu-manage.scss';
 import MyTable from '@/views/my-components/origin/my-table';
 import { menuManageColumn } from '@/libs/tableColumns';
 import useMenuState from './useMenuState';
-import MenuTree from './menu-tree';
+import MenuTree from './components/menu-tree';
 
 const MenuManage: React.FC = () => {
   // 切换模式
@@ -22,7 +22,7 @@ const MenuManage: React.FC = () => {
         {/* Operate组件 */}
         <MmOperate mode={mode} setMode={setMode} />
         {/* Tree组件 */}
-        {mode === 'tree' && <MenuTree />}
+        {mode === 'tree' && <MenuTree permissionData={permissionData} />}
         {/* Table组件 */}
         {mode === 'table' && (
           <MyTable

@@ -1,52 +1,10 @@
-import { Input, Tree } from 'antd';
+import { Input, Spin, Tree } from 'antd';
 import { DataNode } from 'antd/es/tree';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import util from '@/libs/util';
 
 const { Search } = Input;
 
-const defaultData: DataNode[] = [
-  {
-    title: '0-0',
-    key: '0-0',
-    children: [
-      {
-        title: '0-0-0',
-        key: '0-0-0',
-        children: [
-          { title: '0-0-0-0', key: '0-0-0-0' },
-          { title: '0-0-0-1', key: '0-0-0-1' },
-          { title: '0-0-0-2', key: '0-0-0-2' }
-        ]
-      },
-      {
-        title: '0-0-1',
-        key: '0-0-1',
-        children: [
-          { title: '0-0-1-0', key: '0-0-1-0' },
-          { title: '0-0-1-1', key: '0-0-1-1' },
-          { title: '0-0-1-2', key: '0-0-1-2' }
-        ]
-      },
-      {
-        title: '0-0-2',
-        key: '0-0-2'
-      }
-    ]
-  },
-  {
-    title: '0-1',
-    key: '0-1',
-    children: [
-      { title: '0-1-0-0', key: '0-1-0-0' },
-      { title: '0-1-0-1', key: '0-1-0-1' },
-      { title: '0-1-0-2', key: '0-1-0-2' }
-    ]
-  },
-  {
-    title: '0-2',
-    key: '0-2'
-  }
-];
 const getParentKey = (key: React.Key, tree: DataNode[]): React.Key => {
   let parentKey: React.Key;
   for (let i = 0; i < tree.length; i++) {
@@ -65,19 +23,29 @@ const dataList: { key: React.Key; title: string }[] = [];
 const generateList = (data: DataNode[]) => {
   for (let i = 0; i < data.length; i++) {
     const node = data[i];
-    const { key } = node;
-    dataList.push({ key, title: key as string });
+    const { key, title } = node;
+    dataList.push({ key, title: title as string });
     if (node.children) {
       generateList(node.children);
     }
   }
 };
-generateList(defaultData);
 
-const MyTree: React.FC = () => {
+interface MyTreePropType {
+  permissionData: IPermissionRes[];
+  setSelectItem: React.Dispatch<
+    React.SetStateAction<{
+      key: string;
+      title: string;
+    }>
+  >;
+}
+const MyTree: React.FC<MyTreePropType> = ({ permissionData, setSelectItem }) => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
+  const [defaultData, setDefaultData] = useState<DataNode[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys);
@@ -133,16 +101,42 @@ const MyTree: React.FC = () => {
       });
 
     return loop(defaultData);
-  }, [searchValue]);
+  }, [searchValue, defaultData]);
+
+  const handleClick = selectedKeys => {
+    // 根据key，找到title
+    const key = selectedKeys[0];
+    const title = dataList.find(item => item.key === key)?.title || '';
+    setSelectItem({
+      key,
+      title
+    });
+  };
+
+  useEffect(() => {
+    const transData = util.transToDataNode(permissionData);
+    setDefaultData(transData);
+    generateList(transData);
+    setLoading(false);
+  }, [permissionData]);
+
   return (
     <>
       <Search placeholder='输入菜单名搜索' style={{ marginBottom: 8 }} onChange={onChange} />
-      <Tree
-        onExpand={onExpand}
-        expandedKeys={expandedKeys}
-        autoExpandParent={autoExpandParent}
-        treeData={treeData}
-      />
+      <Spin
+        spinning={loading}
+        style={{
+          height: 150
+        }}
+      >
+        <Tree
+          onExpand={onExpand}
+          expandedKeys={expandedKeys}
+          autoExpandParent={autoExpandParent}
+          treeData={treeData}
+          onSelect={handleClick}
+        />
+      </Spin>
     </>
   );
 };
