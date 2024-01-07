@@ -16,7 +16,6 @@ const useUserState = () => {
     if (!res) return;
     // 处理res数据
     util.addKey(res);
-    console.log(res, 'key res');
 
     setPermissionData(res);
   };

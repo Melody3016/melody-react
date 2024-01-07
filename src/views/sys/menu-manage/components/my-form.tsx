@@ -38,6 +38,8 @@ const MyForm: React.FC<MyFormPropType> = ({ formType, formData }) => {
   };
   useEffect(() => {
     // 在组件挂载后，将 formData 回显到表单中
+    console.log(formData, 'formData');
+
     form.setFieldsValue(formData);
   }, [formData, form]);
 
@@ -107,12 +109,13 @@ const MyForm: React.FC<MyFormPropType> = ({ formType, formData }) => {
         </Form.Item>
       )}
 
-      <Form.Item<FieldType> label='图标' name='icon' required>
-        <Input
-          placeholder='输入图标名或选择图标'
-          style={{ flex: 1, marginRight: 15 }}
-          addonAfter={<Button icon={<AimOutlined />}>选择图标</Button>}
-        />
+      <Form.Item label='图标' required>
+        <Form.Item<FieldType> name='icon' style={{ display: 'inline-block' }}>
+          <Input name='icon' placeholder='输入图标名或选择图标' style={{ marginRight: 15 }} />
+        </Form.Item>
+        <Form.Item style={{ display: 'inline-block' }}>
+          <Button icon={<AimOutlined />}>选择图标</Button>
+        </Form.Item>
       </Form.Item>
 
       {formType === 1 && (
@@ -138,14 +141,11 @@ const MyForm: React.FC<MyFormPropType> = ({ formType, formData }) => {
       </Form.Item>
 
       {formType === 1 && (
-        <Form.Item<FieldType> label='始终显示' name='showAlways'>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
+        <Form.Item label='始终显示'>
+          <Form.Item<FieldType> name='showAlways' style={{ display: 'inline-block' }}>
             <Switch checkedChildren='是' unCheckedChildren='否' style={{ marginRight: 10 }} />
+          </Form.Item>
+          <Form.Item style={{ display: 'inline-block' }}>
             <Tooltip
               placement='right'
               title='当设为不始终显示时，一级菜单下仅有一个子级菜单只会显示此子级菜单，避免用户多次点击'
@@ -153,7 +153,7 @@ const MyForm: React.FC<MyFormPropType> = ({ formType, formData }) => {
             >
               <QuestionCircleOutlined />
             </Tooltip>
-          </div>
+          </Form.Item>
         </Form.Item>
       )}
 
