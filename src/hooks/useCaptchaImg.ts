@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRequest } from 'ahooks';
 import { initCaptcha, drawCodeImage } from '@/api/index';
 import useAxios from './useAxios';
 
@@ -8,7 +9,7 @@ const useCaptchaImg = () => {
   const [captchaId, setCaptchaId] = useState('');
   const { fetchData } = useAxios();
 
-  const getCaptchaImg = async () => {
+  /* const getCaptchaImg = async () => {
     // 获取验证码
     setLoadingCaptcha(true);
     const res = await fetchData(initCaptcha);
@@ -17,6 +18,26 @@ const useCaptchaImg = () => {
       setCaptchaImg(drawCodeImage + res);
     }
     setLoadingCaptcha(false);
+  }; */
+
+  const { loading, run } = useRequest(initCaptcha, {
+    manual: true,
+    debounceWait: 300,
+    onSuccess: (res, params) => {
+      if (!res || !res.result) return;
+      setCaptchaId(res.result);
+      setCaptchaImg(drawCodeImage + res.result);
+
+      // message.success(`The username was changed to "${params[0]}" !`);
+    },
+    onError: error => {
+      console.log('error', error);
+    }
+  });
+
+  const getCaptchaImg = async () => {
+    // 获取验证码
+    run();
   };
 
   // 每60s刷新一次验证码
@@ -29,6 +50,6 @@ const useCaptchaImg = () => {
       clearInterval(refreshInterval);
     };
   }, []);
-  return { loadingCaptcha, captchaImg, captchaId, getCaptchaImg };
+  return { loadingCaptcha: loading, captchaImg, captchaId, getCaptchaImg };
 };
 export default useCaptchaImg;
