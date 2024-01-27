@@ -1,5 +1,12 @@
 // 统一请求路径前缀在api/axios.js中修改
-import { getRequest, postRequest, getNoAuthRequest, postNoAuthRequest } from '@/libs/axios';
+import {
+  getRequest,
+  postRequest,
+  getNoAuthRequest,
+  postNoAuthRequest,
+  getNoAuthRequestCache,
+  getRequestCache
+} from '@/libs/axios';
 
 const xbootUrl = '/xboot';
 // const myWebUrl = "my-web"
@@ -19,6 +26,9 @@ export const noticeReq = () => {
 export const initCaptcha = () => {
   return getNoAuthRequest<IData<string>>('/common/captcha/init');
 };
+// export const initCaptcha = () => {
+//   return sendRequest<IData<string>>('/common/captcha/init');
+// };
 
 // 获取登录二维码url
 export const getLoginQRCode = () => {
@@ -89,8 +99,11 @@ export const registerReq = (params: IRegisterParam) => {
 };
 
 // 获取菜单信息
+// export const getMenuList = () => {
+//   return getRequest<IData<IMenuListRes[]>>('/permission/getMenuList', null);
+// };
 export const getMenuList = () => {
-  return getRequest<IData<IMenuListRes[]>>('/permission/getMenuList', null);
+  return getRequestCache<IData<IMenuListRes[]>>('/permission/getMenuList', null);
 };
 
 // 获取vaptcha配置

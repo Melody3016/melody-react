@@ -9,7 +9,7 @@ const useCaptchaImg = () => {
   const [captchaId, setCaptchaId] = useState('');
   const { fetchData } = useAxios();
 
-  /* const getCaptchaImg = async () => {
+  const getCaptchaImg = async () => {
     // 获取验证码
     setLoadingCaptcha(true);
     const res = await fetchData(initCaptcha);
@@ -18,9 +18,9 @@ const useCaptchaImg = () => {
       setCaptchaImg(drawCodeImage + res);
     }
     setLoadingCaptcha(false);
-  }; */
+  };
 
-  const { loading, run } = useRequest(initCaptcha, {
+  /* const { loading, run } = useRequest(initCaptcha, {
     manual: true,
     debounceWait: 300,
     onSuccess: (res, params) => {
@@ -33,12 +33,12 @@ const useCaptchaImg = () => {
     onError: error => {
       console.log('error', error);
     }
-  });
+  }); */
 
-  const getCaptchaImg = async () => {
+  /* const getCaptchaImg = async () => {
     // 获取验证码
     run();
-  };
+  }; */
 
   // 每60s刷新一次验证码
   useEffect(() => {
@@ -50,6 +50,6 @@ const useCaptchaImg = () => {
       clearInterval(refreshInterval);
     };
   }, []);
-  return { loadingCaptcha: loading, captchaImg, captchaId, getCaptchaImg };
+  return { loadingCaptcha, captchaImg, captchaId, getCaptchaImg };
 };
 export default useCaptchaImg;

@@ -86,7 +86,7 @@ const UserLoginForm: React.FC = () => {
               message: '密码不能为空'
             },
             {
-              len: 6,
+              min: 6,
               message: '密码少于6位'
             }
           ]}
